@@ -10,7 +10,7 @@ type State =
     | 'resolving_move_effects'
     | 'game_over';
 
-type Event =
+type Change =
     | 'PLAYERS_EVEN'
     | 'PLAYERS_ODD'
     | 'PLAYERS_FULL'
@@ -25,7 +25,7 @@ type Event =
     | 'PLAY_AGAIN'
     | 'RESET';
 
-const machine: Record<State, Partial<Record<Event, State>>> = {
+const machine: Record<State, Partial<Record<Change, State>>> = {
     waiting_for_players: {
         PLAYERS_EVEN: 'waiting_for_start',
         PLAYERS_FULL: 'room_is_full',
@@ -66,12 +66,12 @@ const machine: Record<State, Partial<Record<Event, State>>> = {
 class StateMachine {
     state: State = 'waiting_for_players';
 
-    dispatch(event: Event) {
-        const next = machine[this.state][event];
+    dispatch(change: Change) {
+        const next = machine[this.state][change];
 
         if (!next) {
             throw new Error(
-                `Event "${event}" invalid on "${this.state}" state`
+                `Event "${change}" invalid on "${this.state}" state`
             );
         }
 
