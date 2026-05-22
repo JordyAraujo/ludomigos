@@ -1,20 +1,9 @@
-const square = document.createElement('div')
+const app = document.getElementById('app')!
 
-square.style.width = '100px'
-square.style.height = '100px'
-square.style.background = 'red'
-square.style.position = 'absolute'
-square.style.left = '0px'
-square.style.top = '0px'
+const connectingText = document.createElement('h1')
 
-const app = document.getElementById('app');
-
-app.appendChild(square)
-
-const diceResultText = document.createElement('h1')
-
-diceResultText.innerText = 'connecting...'
-app.appendChild(diceResultText)
+connectingText.innerText = 'connecting...'
+app.appendChild(connectingText)
 
 let x = 0
 
@@ -32,26 +21,13 @@ ws.onopen = () => {
 
 ws.onmessage = (event) => {
     const message = JSON.parse(event.data)
-    console.log(message)
 
     if (message.type === 'session_created') {
-        diceResultText.innerText =
+        connectingText.innerText =
             `SESSION: ${message.payload.sessionId}`
     } else if (message.type === 'input') {
         const button = message.payload.button;
-        if (button === 'right') {
-            x += 20
-            square.style.left = `${x}px`
-        } else if (button === 'left') {
-            x -= 20
-            square.style.left = `${x}px`
-        } else if (button === 'up') {
-            const currentTop = parseInt(square.style.top)
-            square.style.top = `${currentTop - 20}px`
-        } else if (button === 'down') {
-            const currentTop = parseInt(square.style.top)
-            square.style.top = `${currentTop + 20}px`
-        } else if (button === 'roll_dice') {
+        if (button === 'roll_dice') {
             const diceResult = Math.floor(Math.random() * 6) + 1
             const diceResultText = document.createElement('h2')
 
