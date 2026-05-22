@@ -1,11 +1,43 @@
-const app = document.getElementById('app')!
+import {
+    Application,
+    Assets,
+    Sprite,
+    TextureStyle
+} from 'pixi.js'
 
-const connectingText = document.createElement('h1')
+TextureStyle.defaultOptions.scaleMode = 'nearest'
 
-connectingText.innerText = 'connecting...'
-app.appendChild(connectingText)
+const app = new Application()
 
-let x = 0
+await app.init({
+    width: 1920,
+    height: 1080,
+    background: '#1a1a1a',
+})
+
+document.body.appendChild(app.canvas)
+
+const boardTexture = await Assets.load('/board.png')
+const board = new Sprite(boardTexture)
+
+board.x = 460
+board.y = 40
+
+board.width = 1000
+board.height = 1000
+
+app.stage.addChild(board)
+
+const redTexture = await Assets.load('/red.png')
+const red = new Sprite(redTexture)
+
+red.x = 585
+red.y = 860
+
+red.width = 55
+red.height = 55
+
+app.stage.addChild(red)
 
 const ws = new WebSocket(import.meta.env.VITE_WEBSOCKET_URL)
 
@@ -23,16 +55,12 @@ ws.onmessage = (event) => {
     const message = JSON.parse(event.data)
 
     if (message.type === 'session_created') {
-        connectingText.innerText =
-            `SESSION: ${message.payload.sessionId}`
+        console.log(`SESSION: ${message.payload.sessionId}`)
     } else if (message.type === 'input') {
         const button = message.payload.button;
         if (button === 'roll_dice') {
             const diceResult = Math.floor(Math.random() * 6) + 1
-            const diceResultText = document.createElement('h2')
-
-            diceResultText.innerText = `Você rolou o dado e deu ${diceResult}!`
-            app.appendChild(diceResultText)
+            console.log(`Você rolou o dado e deu ${diceResult}!`)
         }
     }
 }
