@@ -27,6 +27,7 @@ type Change =
 
 const machine: Record<State, Partial<Record<Change, State>>> = {
     waiting_for_players: {
+        PLAYERS_ODD: 'waiting_for_players',
         PLAYERS_EVEN: 'waiting_for_start',
         PLAYERS_FULL: 'room_is_full',
     },

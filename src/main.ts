@@ -36,14 +36,14 @@ const players = [];
 ws.onmessage = (event) => {
     const message = JSON.parse(event.data)
 
-    if (message.type === 'session_created') {
+    if (message.type === 'session_created' && message.payload.sessionId) {
         console.log(`Sessão criada com ID: ${message.payload.sessionId}`)
         stateMachine.debugState()
-    } else if (message.type === 'joined_session') {
+    } else if (message.type === 'joined_session' && message.payload.sessionId && message.payload.clientId) {
         players.push(message.payload.clientId)
-        if (players.length % 2 === 0 && players.length < 4) {
-            stateMachine.dispatch('PLAYERS_EVEN')
-        } else if (players.length === 4) {
+        if (players.length < 4) {
+            stateMachine.dispatch(players.length % 2 === 0 ? 'PLAYERS_EVEN' : 'PLAYERS_ODD')
+        } else {
             stateMachine.dispatch('PLAYERS_FULL')
         }
         console.log(`Sessão juntada com ID: ${message.payload.sessionId}`)
