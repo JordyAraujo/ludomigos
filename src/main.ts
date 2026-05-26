@@ -30,12 +30,24 @@ ws.onopen = () => {
     )
 }
 
+const stateMachine = new StateMachine()
+const players = [];
+
 ws.onmessage = (event) => {
     const message = JSON.parse(event.data)
 
     if (message.type === 'session_created') {
-        const stateMachine = new StateMachine()
         console.log(`Sessão criada com ID: ${message.payload.sessionId}`)
+        stateMachine.debugState()
+    } else if (message.type === 'joined_session') {
+        players.push(message.payload.clientId)
+        if (players.length % 2 === 0 && players.length < 4) {
+            stateMachine.dispatch('PLAYERS_EVEN')
+        } else if (players.length === 4) {
+            stateMachine.dispatch('PLAYERS_FULL')
+        }
+        console.log(`Sessão juntada com ID: ${message.payload.sessionId}`)
+        console.log(`Jogadores na sessão: ${players.length}`)
         stateMachine.debugState()
     } else if (message.type === 'input') {
         const button = message.payload.button;
