@@ -63,7 +63,7 @@ const machine: Record<State, Partial<Record<Change, State>>> = {
     },
 };
 
-class StateMachine {
+export class StateMachine {
     state: State = 'waiting_for_players';
 
     dispatch(change: Change) {
@@ -76,5 +76,9 @@ class StateMachine {
         }
 
         this.state = next;
+    }
+
+    debugState() {
+        console.log(`Current state: ${this.state}`);
     }
 }
