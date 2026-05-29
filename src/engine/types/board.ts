@@ -1,8 +1,6 @@
-export type Color = 'red' | 'green' | 'yellow' | 'blue'
-
-export type BoardSpace = {
+export type BoardSpaceType = {
   x: number
   y: number
 }
 
-export type House = BoardSpace[]
+export type BoardHouseType = BoardSpaceType[]

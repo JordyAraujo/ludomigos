@@ -4,6 +4,8 @@ import {
 } from 'pixi.js'
 import { Board } from './engine/board'
 import { StateMachine } from './engine/stateMachine'
+import { Player } from './engine/player'
+import { toPlayerCountType } from './engine/types/player'
 
 TextureStyle.defaultOptions.scaleMode = 'nearest'
 
@@ -33,14 +35,16 @@ ws.onopen = () => {
 const stateMachine = new StateMachine()
 const players = [];
 
-ws.onmessage = (event) => {
+ws.onmessage = async (event) => {
     const message = JSON.parse(event.data)
 
     if (message.type === 'session_created' && message.payload.sessionId) {
         console.log(`Sessão criada com ID: ${message.payload.sessionId}`)
         stateMachine.debugState()
     } else if (message.type === 'joined_session' && message.payload.sessionId && message.payload.clientId) {
-        players.push(message.payload.clientId)
+        const newPlayer = new Player(message.payload.clientId, toPlayerCountType(players.length), app)
+        await newPlayer.loadPieces()
+        players.push(newPlayer)
         if (players.length < 4) {
             stateMachine.dispatch(players.length % 2 === 0 ? 'PLAYERS_EVEN' : 'PLAYERS_ODD')
         } else {
