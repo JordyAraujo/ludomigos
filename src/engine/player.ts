@@ -5,10 +5,10 @@ import { Piece } from "./piece"
 import { PlayerColorType, PlayerCountType } from "./types/player"
 
 export class Player {
-  clientId: string
-  color: PlayerColorType
-  pieces: [Piece, Piece, Piece, Piece]
-  app: Application
+    clientId: string
+    color: PlayerColorType
+    pieces: [Piece, Piece, Piece, Piece]
+    app: Application
 
     constructor(clientId: string, playerCount: PlayerCountType, app: Application) {
         this.clientId = clientId
