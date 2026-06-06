@@ -33,24 +33,43 @@ ws.onopen = () => {
 }
 
 const stateMachine = new StateMachine()
-const players = [];
+const players: Player[] = [];
 
 ws.onmessage = async (event) => {
     const message = JSON.parse(event.data)
+    console.log('Mensagem recebida do servidor:', message)
 
     if (message.type === 'session_created' && message.payload.sessionId) {
         console.log(`Sessão criada com ID: ${message.payload.sessionId}`)
         stateMachine.debugState()
-    } else if (message.type === 'joined_session' && message.payload.sessionId && message.payload.clientId) {
-        const newPlayer = new Player(message.payload.clientId, toPlayerCountType(players.length), app)
-        await newPlayer.loadPieces()
-        players.push(newPlayer)
+    } else if (message.type === 'player_joined' && message.payload.players) {
+        players.splice(0, players.length)
+        message.payload.players.forEach((player: any) => {
+            // TODO Tem que mover a lógica de escolher cor toda pro websocket
+            const newPlayer = new Player(player.clientId, player.playerName, toPlayerCountType(players.length), app)
+            players.push(newPlayer)
+        })
+
+        ws.send(
+            JSON.stringify({
+                type: 'players_updated',
+                payload: {
+                    players
+                }
+            })
+        )
+        
         if (players.length < 4) {
             stateMachine.dispatch(players.length % 2 === 0 ? 'PLAYERS_EVEN' : 'PLAYERS_ODD')
         } else {
             stateMachine.dispatch('PLAYERS_FULL')
         }
-        console.log(`Sessão juntada com ID: ${message.payload.sessionId}`)
+
+        players.forEach(async (player: Player) => {
+            player.debugPlayer()
+            await player.loadPieces()
+        })
+    
         console.log(`Jogadores na sessão: ${players.length}`)
         stateMachine.debugState()
     } else if (message.type === 'input') {

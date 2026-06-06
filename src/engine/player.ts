@@ -6,12 +6,14 @@ import { PlayerColorType, PlayerCountType } from "./types/player"
 
 export class Player {
     clientId: string
+    playerName: string
     color: PlayerColorType
     pieces: [Piece, Piece, Piece, Piece]
     app: Application
 
-    constructor(clientId: string, playerCount: PlayerCountType, app: Application) {
+    constructor(clientId: string, playerName: string, playerCount: PlayerCountType, app: Application) {
         this.clientId = clientId
+        this.playerName = playerName
         this.color = PLAYER_COLORS[playerCount]
         this.pieces = [
             new Piece(this.color, BOARD_HOUSES[this.color][0]),
@@ -20,6 +22,11 @@ export class Player {
             new Piece(this.color, BOARD_HOUSES[this.color][3])
         ]
         this.app = app
+        console.log(`Jogador criado: ${this.playerName} (ID: ${this.clientId}) - Cor: ${this.color})`)
+    }
+
+    debugPlayer() {
+        console.log(`Jogador na sessão CLIENTE: ${this.playerName} (ID: ${this.clientId}) - (Cor: ${this.color})`)
     }
 
     async loadPieces() {
