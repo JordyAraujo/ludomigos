@@ -65,6 +65,7 @@ const machine: Record<State, Partial<Record<Change, State>>> = {
 };
 
 export class StateMachine {
+    sessionId: string = '';
     state: State = 'waiting_for_players';
 
     dispatch(change: Change) {
@@ -77,6 +78,10 @@ export class StateMachine {
         }
 
         this.state = next;
+    }
+
+    setSessionId(sessionId: string) {
+        this.sessionId = sessionId;
     }
 
     debugState() {
