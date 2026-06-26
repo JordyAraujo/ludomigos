@@ -1,5 +1,4 @@
-import { BoardSpaceType, BoardHouseType } from "../types/board"
-import { PlayerColorType } from "../types/player"
+import { BoardHouseType, BoardSpaceType, PlayerColorType } from "../types"
 import { GAME_HEIGHT, GAME_WIDTH } from "./game"
 
 export const BOARD_WIDTH: number = 256 * 4
@@ -142,7 +141,7 @@ const BOARD_FINAL_SPACES: Record<PlayerColorType, BoardHouseType> = {
     ]
 }
 
-const BOARD_SPACES_BY_COLOR: Record<PlayerColorType, BoardSpaceType[]> = {
+export const BOARD_SPACES_BY_COLOR: Record<PlayerColorType, BoardSpaceType[]> = {
     red: BOARD_SPACES.slice(0, 55).concat(BOARD_FINAL_SPACES.red),
     green: BOARD_SPACES.slice(14, 56).concat(BOARD_SPACES.slice(0, 13)).concat(BOARD_FINAL_SPACES.green),
     yellow: BOARD_SPACES.slice(28, 56).concat(BOARD_SPACES.slice(0, 27)).concat(BOARD_FINAL_SPACES.yellow),

@@ -1,23 +1,19 @@
 services:
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: .
     ports:
-      - '3000:3000'
+      - "3000:3000"
     volumes:
       - .:/app
-      - node_modules:/app/node_modules
+      - /app/node_modules
     environment:
-      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
     command: npm run dev -- --host 0.0.0.0
+    stdin_open: true
+    tty: true
     networks:
       - websocket-net
 
 networks:
   websocket-net:
     external: true
-    name: websocket-net
-
-volumes:
-  node_modules:

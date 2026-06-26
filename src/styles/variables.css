@@ -1,0 +1,19 @@
+:root {
+  --red: #e60000;
+  --green: #008300;
+  --blue: #0163c6;
+  --yellow: #ffde00;
+
+  --bg: #ffad63;
+  --panel: #ffe7c5;
+
+  --text: #3a2802;
+  --border: #000000;
+
+  --shadow:
+    8px 8px 0 rgba(0, 0, 0, 0.15);
+
+  --radius: 18px;
+
+  --sidebar-width: 400px;
+}
