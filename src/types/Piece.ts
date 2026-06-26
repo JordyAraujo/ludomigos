@@ -17,10 +17,6 @@ export class Piece {
 
     setSpace(position: number) {
         this.space = this.getSpace(position)
-        // this.sprite.position.set(
-        //     this.space.x,
-        //     this.space.y
-        // )
     }
 
     getSpace(position: number) {
@@ -39,11 +35,4 @@ export class Piece {
     debugPiece(piece: Piece) {
         console.log(`Peça de ID ${piece.id}, de cor ${piece.color}, posicionada em (x: ${piece.space.x}, y: ${piece.space.y}), tamanho (largura: ${PIECE_WIDTH}, altura: ${PIECE_HEIGHT})`)
     }
-}
-
-export interface PieceState {
-    id: string
-    playerId: string
-    color: PlayerColorType
-    position: number
 }

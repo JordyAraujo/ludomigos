@@ -1,7 +1,7 @@
-import { store, session } from '../game/state/GameStore'
+import { session, store } from '../game/state/GameStore'
 import { Player, toPlayerCountType } from '../types'
 import { createSession, sendNewPlayerColor } from './WebSocketActions'
-import { StateMachine } from '../game/state/stateMachine'
+import { StateMachine } from '../game/state/StateMachine'
 
 export class WebSocketService {
     private socket?: WebSocket

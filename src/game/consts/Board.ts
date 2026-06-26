@@ -1,5 +1,5 @@
-import { BoardHouseType, BoardSpaceType, PlayerColorType } from "../types"
-import { GAME_HEIGHT, GAME_WIDTH } from "./game"
+import { BoardHouseType, BoardSpaceType, PlayerColorType } from "../../types"
+import { GAME_HEIGHT, GAME_WIDTH } from "./Game"
 
 export const BOARD_WIDTH: number = 256 * 4
 export const BOARD_HEIGHT: number = 256 * 4

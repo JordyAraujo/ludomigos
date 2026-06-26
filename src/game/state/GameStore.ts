@@ -1,20 +1,17 @@
 import { reactive } from 'vue'
-import { Player } from '../../types'
+import { Player, Piece } from '../../types'
 import { WebSocketService } from '../../websocket'
-import { StateMachine } from './stateMachine'
+import { StateMachine } from './StateMachine'
 
-export interface Piece {
+interface SessionState {
   id: string
-  playerId: string
-  color: string
-  position: number
 }
 
-export const session = reactive({
+export const session = reactive<SessionState>({
   id: ''
 })
 
-export interface StoreState {
+interface StoreState {
   websocketService?: WebSocketService,
   joinUrl: string,
   dataUrl: string,

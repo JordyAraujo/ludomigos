@@ -1,7 +1,3 @@
-<script setup lang="ts">
-import { ref, onMounted } from 'vue'
-</script>
-
 <template>
   <section class="panel board-panel">
     <!-- <div ref="boardRef" class="board-container" /> -->

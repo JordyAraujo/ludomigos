@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { store } from '../../game/state/GameStore';
+import { currentTurnPlayer } from '../../game/state';
 
 const currentPlayer = 'João'
 const timeRemaining = 28
 </script>
 
 <template>
-  <section class="panel status-panel" v-if="store.currentTurnPlayer">
+  <section class="panel status-panel" v-if="currentTurnPlayer()">
     <p>
-      É a vez de <strong>{{ store.currentTurnPlayer }}</strong>
+      É a vez de <strong>{{ currentTurnPlayer() }}</strong>
     </p>
 
     <p>

@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import Sidebar from './Sidebar.vue'
-
 import BoardView from '../game/BoardView.vue'
-import StatusView from '../game/StatusView.vue'
 </script>
 
 <template>

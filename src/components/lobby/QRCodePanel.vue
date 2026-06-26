@@ -1,25 +1,26 @@
 <script setup lang="ts">
 import * as QRCode from 'qrcode';
 import { watch } from 'vue';
-import { store, session } from '../../game/state/GameStore';
+import { setJoinUrl, setDataUrl, session, joinUrl, dataUrl } from '../../game/state';
 
 const controllerUrl = import.meta.env.VITE_CONTROLLER_URL;
 
 watch(session, async (session) => {
-  store.joinUrl = `${controllerUrl}?id=${session.id}`;
-  store.dataUrl = await QRCode.toDataURL(store.joinUrl);
+  setJoinUrl(`${controllerUrl}?id=${session.id}`);
+  const dataUrl = await QRCode.toDataURL(joinUrl());
+  setDataUrl(dataUrl);
 })
 </script>
 
 <template>
   <section class="panel qr-panel">
     <div class="qr-wrapper">
-      <img v-if="store.dataUrl !== ''" :src="store.dataUrl" alt="QR code" />
-      
+      <img v-if="dataUrl() !== ''" :src="dataUrl()" alt="QR code" />
+
       <div v-else>
         Gerando QR Code...
       </div>
-      <h2 v-if="store.joinUrl !== ''">{{ store.joinUrl }}</h2>
+      <h2 v-if="joinUrl() !== ''">{{ joinUrl() }}</h2>
     </div>
   </section>
 </template>
