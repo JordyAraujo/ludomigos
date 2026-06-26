@@ -8,8 +8,8 @@ export function createSession(service: WebSocketService) {
     service.send(createSessionMessage)
 }
 
-export function sendNewPlayerColor(newPlayer: Player, service?: WebSocketService) {
-    service?.send({
+export function sendNewPlayerColor(newPlayer: Player, service: WebSocketService) {
+    service.send({
         type: 'player_color',
         payload: {
             sessionId: session.id,

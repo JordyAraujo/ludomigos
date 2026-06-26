@@ -4,13 +4,13 @@ import App from './App.vue'
 import router from './router'
 
 import { WebSocketService } from '../websocket/WebSocketService'
-import { setWebsocketService } from '../game/state'
+import { store } from '../game/state'
 
-const websocketService = new WebSocketService();
+const websocketService = new WebSocketService()
 
-websocketService.connect();
+websocketService.connect()
 
-setWebsocketService(websocketService);
+store.setWebsocketService(websocketService)
 
 createApp(App)
   .use(router)

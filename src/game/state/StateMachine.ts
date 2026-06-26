@@ -8,7 +8,7 @@ type State =
     | 'waiting_for_pawn_selection'
     | 'moving_pawn'
     | 'resolving_move_effects'
-    | 'game_over';
+    | 'game_over'
 
 type Change =
     | 'PLAYERS_EVEN'
@@ -23,7 +23,7 @@ type Change =
     | 'EFFECTS_RESOLVED'
     | 'GAME_OVER'
     | 'PLAY_AGAIN'
-    | 'RESET';
+    | 'RESET'
 
 const machine: Record<State, Partial<Record<Change, State>>> = {
     waiting_for_players: {
@@ -62,24 +62,24 @@ const machine: Record<State, Partial<Record<Change, State>>> = {
         PLAY_AGAIN: 'waiting_for_start',
         RESET: 'waiting_for_players',
     },
-};
+}
 
 export class StateMachine {
-    state: State = 'waiting_for_players';
+    state: State = 'waiting_for_players'
 
     dispatch(change: Change) {
-        const next = machine[this.state][change];
+        const next = machine[this.state][change]
 
         if (!next) {
             throw new Error(
                 `Event "${change}" invalid on "${this.state}" state`
-            );
+            )
         }
 
-        this.state = next;
+        this.state = next
     }
 
     debugState() {
-        console.log(`Current state: ${this.state}`);
+        console.log(`Current state: ${this.state}`)
     }
 }

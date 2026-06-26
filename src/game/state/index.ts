@@ -1,3 +1,9 @@
-export { session } from './GameStore'
-export * from './Getters'
-export * from './Setters'
+import { session } from './GameStore'
+import * as getters from './Getters'
+import * as setters from './Setters'
+
+export const store = {
+    session,
+    ...getters,
+    ...setters
+}

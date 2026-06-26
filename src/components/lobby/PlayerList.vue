@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { players } from '../../game/state';
+import { store } from '../../game/state'
 </script>
 
 <template>
-  <section class="panel players" v-if="players().length">
+  <section class="panel players" v-if="store.players().length">
     <h2>Jogadores</h2>
     <ul>
-      <li v-for="player in players()" :key="player.playerName">
+      <li v-for="player in store.players()" :key="player.playerName">
         <span class="color" :class="player.color" />
         <span>{{ player.playerName }}</span>
       </li>
